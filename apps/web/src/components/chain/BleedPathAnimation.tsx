@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { Chain } from '@bleed/shared'
+import type { Chain, ChainNode } from '@bleed/shared'
 
 const nodeTypeColors: Record<string, string> = {
   INPUT: 'border-ivory/40 text-ivory',

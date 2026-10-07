@@ -20,11 +20,19 @@ import Research from './pages/Research'
 import Settings from './pages/Settings'
 import Notebook from './pages/Notebook'
 import DependencyScanner from './pages/DependencyScanner'
+import PropertyIntelligence from './pages/PropertyIntelligence'
+import ChainComparison from './pages/ChainComparison'
+import BeforeAfter from './pages/BeforeAfter'
+import Showcase from './pages/Showcase'
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <Landing />,
+  },
+  {
+    path: '/showcase',
+    element: <Showcase />,
   },
   {
     path: '/',
@@ -44,6 +52,10 @@ export const router = createBrowserRouter([
       { path: 'runs', element: <Runs /> },
       { path: 'runs/:id', element: <RunDetail /> },
       { path: 'evidence', element: <Evidence /> },
+      { path: 'properties', element: <PropertyIntelligence /> },
+      { path: 'properties/:name', element: <PropertyIntelligence /> },
+      { path: 'compare', element: <ChainComparison /> },
+      { path: 'before-after', element: <BeforeAfter /> },
       { path: 'notebook', element: <Notebook /> },
       { path: 'inspector', element: <ObjectInspectorPage /> },
       { path: 'methodology', element: <Methodology /> },

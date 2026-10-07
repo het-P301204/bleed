@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, FlaskConical, BookOpen, Cpu, Link2, Play,
   Eye, FileSearch, BookOpenCheck, Microscope, Settings, StickyNote,
-  PackageSearch, Database,
+  PackageSearch, Database, Fingerprint, GitCompare, ArrowLeftRight,
 } from 'lucide-react'
 
 const nav = [
@@ -15,6 +15,9 @@ const nav = [
   { to: '/runs', label: 'Runs', icon: Play },
   { to: '/visualizer', label: 'Visualizer', icon: Eye },
   { to: '/evidence', label: 'Evidence', icon: FileSearch },
+  { to: '/properties', label: 'Properties', icon: Fingerprint },
+  { to: '/compare', label: 'Compare', icon: GitCompare },
+  { to: '/before-after', label: 'Before/After', icon: ArrowLeftRight },
   { to: '/notebook', label: 'Notebook', icon: StickyNote },
   { to: '/methodology', label: 'Methodology', icon: BookOpenCheck },
   { to: '/research', label: 'Research', icon: Database },
@@ -23,6 +26,7 @@ const nav = [
 
 interface SidebarProps {
   collapsed?: boolean
+  onToggle?: () => void
 }
 
 export default function Sidebar({ collapsed }: SidebarProps) {

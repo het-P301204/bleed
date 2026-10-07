@@ -1,0 +1,16 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark graphite rounded rect background -->
+  <rect width="32" height="32" rx="6" fill="#171717"/>
+
+  <!-- B letterform spine -->
+  <rect x="7" y="5" width="3" height="19" fill="#E45D4B"/>
+
+  <!-- B upper bump (smaller) -->
+  <path d="M 10 5 H 15 Q 21 5 21 9.5 Q 21 14 15 14 H 10 Z" fill="#E45D4B"/>
+
+  <!-- B lower bump (slightly larger) -->
+  <path d="M 10 13.5 H 16.5 Q 23 13.5 23 18.5 Q 23 24 16.5 24 H 10 Z" fill="#E45D4B"/>
+
+  <!-- Drip: teardrop falling from the bottom of the B -->
+  <path d="M 12.5 24 C 15 24 15 28 12.5 30 C 10 28 10 24 12.5 24 Z" fill="#E45D4B"/>
+</svg>

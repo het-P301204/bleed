@@ -3,11 +3,14 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import TopBar from './TopBar'
 import CommandPalette from '../common/CommandPalette'
+import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts'
 
 export default function AppShell() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const navigate = useNavigate()
+
+  useKeyboardShortcuts()
 
   const openSearch = () => {
     window.dispatchEvent(new CustomEvent('bleed:cmd'))
@@ -25,7 +28,7 @@ export default function AppShell() {
 
       {/* Sidebar - desktop */}
       <div className="hidden md:flex flex-shrink-0">
-        <Sidebar collapsed={sidebarCollapsed} />
+        <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(c => !c)} />
       </div>
 
       {/* Sidebar - mobile drawer */}

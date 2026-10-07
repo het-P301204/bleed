@@ -58,7 +58,7 @@ function chainToFlow(chain: Chain): { nodes: Node[]; edges: Edge[] } {
   const nodes: Node[] = chain.nodes.map((n: ChainNode, i: number) => ({
     id: n.id,
     type: 'chainNode',
-    data: n,
+    data: n as unknown as Record<string, unknown>,
     position: {
       x: (i % COLS) * 220,
       y: Math.floor(i / COLS) * 120,
@@ -109,7 +109,7 @@ export default function PrototypeChainGraph({ chain }: PrototypeChainGraphProps)
         <Controls style={{ background: '#1E1E1E', border: '1px solid #2A2A2A' }} />
         <MiniMap
           style={{ background: '#171717', border: '1px solid #2A2A2A' }}
-          nodeColor={(n) => nodeColors[(n.data as ChainNode).type]?.border ?? '#2A2A2A'}
+          nodeColor={(n) => nodeColors[(n.data as unknown as ChainNode).type]?.border ?? '#2A2A2A'}
         />
       </ReactFlow>
     </div>
