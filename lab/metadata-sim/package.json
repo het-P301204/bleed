@@ -1,0 +1,12 @@
+{
+  "name": "@bleed/metadata-sim",
+  "version": "0.1.0",
+  "description": "Synthetic metadata endpoint for BLEED lab",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

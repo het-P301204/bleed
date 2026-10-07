@@ -1,0 +1,13 @@
+{
+  "name": "@bleed/hardened-app",
+  "version": "0.1.0",
+  "description": "Hardened Node.js app for BLEED prototype pollution research",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "axios": "^1.7.0"
+  }
+}

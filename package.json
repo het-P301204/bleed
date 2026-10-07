@@ -1,0 +1,33 @@
+{
+  "name": "bleed",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Server-Side Prototype Pollution Research Platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "lab/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n web,api -c cyan,yellow \"npm run dev -w apps/web\" \"npm run dev -w apps/api\"",
+    "build": "npm run build -w packages/shared && npm run build -w packages/runtime-model && npm run build -w packages/gadget-engine && npm run build -w packages/chain-engine && npm run build -w apps/api && npm run build -w apps/web",
+    "test": "npm run test -w packages/shared && npm run test -w packages/runtime-model && npm run test -w packages/gadget-engine && npm run test -w packages/chain-engine && npm run test -w apps/api",
+    "lint": "eslint 'apps/**/*.{ts,tsx}' 'packages/**/*.{ts,tsx}' 'lab/**/*.ts'",
+    "typecheck": "tsc --noEmit -p tsconfig.base.json",
+    "lab:up": "docker compose up -d",
+    "lab:down": "docker compose down",
+    "lab:logs": "docker compose logs -f"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.5.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "esbuild@0.21.5": true,
+    "esbuild@0.25.12": true
+  }
+}

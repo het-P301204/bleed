@@ -1,0 +1,12 @@
+{
+  "name": "@bleed/http-sim",
+  "version": "0.1.0",
+  "description": "Synthetic HTTP listener for BLEED lab",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

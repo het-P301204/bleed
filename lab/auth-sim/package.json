@@ -1,0 +1,12 @@
+{
+  "name": "@bleed/auth-sim",
+  "version": "0.1.0",
+  "description": "Synthetic authorization service for BLEED lab",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

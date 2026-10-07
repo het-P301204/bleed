@@ -1,0 +1,153 @@
+name: bleed
+
+networks:
+  bleed-net:
+    driver: bridge
+    internal: false  # allows npm install during build; runtime traffic stays within bleed-net
+
+services:
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: bleed-api
+    ports:
+      - "4001:4001"
+    environment:
+      - NODE_ENV=production
+      - PORT=4001
+      - VULNERABLE_APP_URL=http://vulnerable-app:4010
+      - HARDENED_APP_URL=http://hardened-app:4011
+      - HTTP_SIM_URL=http://http-sim:4020
+      - AUTH_SIM_URL=http://auth-sim:4021
+      - METADATA_SIM_URL=http://metadata-sim:4022
+    networks:
+      - bleed-net
+    depends_on:
+      - vulnerable-app
+      - hardened-app
+      - http-sim
+      - auth-sim
+      - metadata-sim
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: bleed-web
+    ports:
+      - "4000:80"
+    networks:
+      - bleed-net
+    depends_on:
+      - api
+
+  vulnerable-app:
+    build:
+      context: ./lab/vulnerable-app
+      dockerfile: Dockerfile
+    container_name: bleed-vulnerable-app
+    expose:
+      - "4010"
+    environment:
+      - NODE_ENV=production
+      - PORT=4010
+      - HTTP_SIM_URL=http://http-sim:4020
+      - AUTH_SIM_URL=http://auth-sim:4021
+      - METADATA_SIM_URL=http://metadata-sim:4022
+    networks:
+      - bleed-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+    security_opt:
+      - no-new-privileges:true
+
+  hardened-app:
+    build:
+      context: ./lab/hardened-app
+      dockerfile: Dockerfile
+    container_name: bleed-hardened-app
+    expose:
+      - "4011"
+    environment:
+      - NODE_ENV=production
+      - PORT=4011
+      - HTTP_SIM_URL=http://http-sim:4020
+      - AUTH_SIM_URL=http://auth-sim:4021
+    networks:
+      - bleed-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+    security_opt:
+      - no-new-privileges:true
+
+  http-sim:
+    build:
+      context: ./lab/http-sim
+      dockerfile: Dockerfile
+    container_name: bleed-http-sim
+    expose:
+      - "4020"
+    environment:
+      - NODE_ENV=production
+      - PORT=4020
+    networks:
+      - bleed-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+    security_opt:
+      - no-new-privileges:true
+
+  auth-sim:
+    build:
+      context: ./lab/auth-sim
+      dockerfile: Dockerfile
+    container_name: bleed-auth-sim
+    expose:
+      - "4021"
+    environment:
+      - NODE_ENV=production
+      - PORT=4021
+    networks:
+      - bleed-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+    security_opt:
+      - no-new-privileges:true
+
+  metadata-sim:
+    build:
+      context: ./lab/metadata-sim
+      dockerfile: Dockerfile
+    container_name: bleed-metadata-sim
+    expose:
+      - "4022"
+    environment:
+      - NODE_ENV=production
+      - PORT=4022
+    networks:
+      - bleed-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+    security_opt:
+      - no-new-privileges:true

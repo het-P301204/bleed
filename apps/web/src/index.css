@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-graphite: #171717;
+  --color-ivory: #F5F0E7;
+  --color-stone: #E6DED1;
+  --color-coral: #E45D4B;
+  --color-marigold: #D6A944;
+  --color-sage: #7F9B80;
+  --color-iris: #9082B0;
+  --color-plum: #513D4F;
+  --color-surface: #1E1E1E;
+  --color-border: #2A2A2A;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-graphite);
+  color: var(--color-ivory);
+  font-family: 'Manrope', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-mono, code, pre {
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+/* React Flow overrides */
+.react-flow__background {
+  background-color: var(--color-surface) !important;
+}
+
+.react-flow__edge-path {
+  stroke: var(--color-border);
+}

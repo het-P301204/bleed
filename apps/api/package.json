@@ -1,0 +1,30 @@
+{
+  "name": "@bleed/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "cors": "^2.8.5",
+    "@bleed/shared": "*",
+    "@bleed/runtime-model": "*",
+    "@bleed/gadget-engine": "*",
+    "@bleed/chain-engine": "*",
+    "@bleed/evidence": "*"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "*",
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/supertest": "^6.0.2",
+    "supertest": "^7.0.0",
+    "vitest": "^2.0.0"
+  }
+}
