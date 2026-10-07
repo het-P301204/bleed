@@ -21,6 +21,8 @@ services:
       - HTTP_SIM_URL=http://http-sim:4020
       - AUTH_SIM_URL=http://auth-sim:4021
       - METADATA_SIM_URL=http://metadata-sim:4022
+      # Set BLEED_API_TOKEN to enable bearer-token auth in production
+      # - BLEED_API_TOKEN=${BLEED_API_TOKEN}
     networks:
       - bleed-net
     depends_on:
@@ -29,6 +31,8 @@ services:
       - http-sim
       - auth-sim
       - metadata-sim
+    security_opt:
+      - no-new-privileges:true
     deploy:
       resources:
         limits:
@@ -46,6 +50,8 @@ services:
       - bleed-net
     depends_on:
       - api
+    security_opt:
+      - no-new-privileges:true
 
   vulnerable-app:
     build:

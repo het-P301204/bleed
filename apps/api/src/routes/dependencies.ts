@@ -15,6 +15,10 @@ router.post('/', (req, res) => {
   }
 
   const pkgMap = packages as Record<string, unknown>
+  if (Object.keys(pkgMap).length > 500) {
+    res.status(400).json({ error: 'Too many packages (max 500)' })
+    return
+  }
   const validated: Record<string, string> = {}
   for (const [name, version] of Object.entries(pkgMap)) {
     if (typeof version !== 'string') {

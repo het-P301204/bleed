@@ -249,7 +249,12 @@ router.post('/run', async (req, res) => {
     const result = await enqueue(() => handleScenarioRun(req));
     res.json(result);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    if (process.env.NODE_ENV !== 'production') {
+      res.status(500).json({ error: err.message });
+    } else {
+      console.error(err);
+      res.status(500).json({ error: 'Scenario execution failed' });
+    }
   }
 });
 

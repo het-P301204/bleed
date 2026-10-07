@@ -2,12 +2,9 @@ import type { Request, Response, NextFunction } from 'express'
 
 const LAB_TARGET_ALLOWLIST = new Set(['http-sim', 'auth-sim', 'metadata-sim', 'internal-api'])
 
-export function rejectOversizedBody(req: Request, res: Response, next: NextFunction): void {
-  const contentLength = Number(req.headers['content-length'] ?? 0)
-  if (contentLength > 1_048_576) {
-    res.status(413).json({ error: 'Request body too large (max 1 MB)' })
-    return
-  }
+export function rejectOversizedBody(_req: Request, _res: Response, next: NextFunction): void {
+  // Body-size enforcement is handled by express.json({limit:'1mb'}) which measures
+  // actual bytes received, not the client-supplied Content-Length header.
   next()
 }
 

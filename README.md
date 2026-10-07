@@ -79,14 +79,14 @@ Every attack in the lab follows this chain. BLEED visualizes each step, captures
 
 **Research Lab** — Execute real SSPP attacks against Docker-isolated fixtures. Watch exploitation succeed on vulnerable, blocked on hardened.
 
-![Lab](docs/screenshots/lab.jpg)
+![Lab](docs/screenshots/lab.png)
 
 </td>
 <td width="50%">
 
 **Chain Library** — 20 exploit chains with status badges, propagation depth, and animated path visualization.
 
-![Chains](docs/screenshots/chains.jpg)
+![Chains](docs/screenshots/chains.png)
 
 </td>
 </tr>
@@ -95,14 +95,14 @@ Every attack in the lab follows this chain. BLEED visualizes each step, captures
 
 **Gadget Inventory** — 36 gadgets sorted by severity, mapped to impact categories with real CVE references.
 
-![Gadgets](docs/screenshots/gadgets.jpg)
+![Gadgets](docs/screenshots/gadgets.png)
 
 </td>
 <td width="50%">
 
 **Prototype Chain Visualizer** — Interactive React Flow graph showing the full source → prototype → gadget → impact topology.
 
-![Visualizer](docs/screenshots/visualizer.jpg)
+![Visualizer](docs/screenshots/visualizer.png)
 
 </td>
 </tr>
@@ -111,14 +111,14 @@ Every attack in the lab follows this chain. BLEED visualizes each step, captures
 
 **Before / After Hardening** — Side-by-side vulnerable vs hardened execution. The BLOCKED banner shows exactly where mitigation fires.
 
-![Before/After](docs/screenshots/before-after.jpg)
+![Before/After](docs/screenshots/before-after.png)
 
 </td>
 <td width="50%">
 
 **Chain Comparison** — Pick two chains, compare them across source, property, depth, gadget, impact, confidence, and evidence.
 
-![Compare](docs/screenshots/compare.jpg)
+![Compare](docs/screenshots/compare.png)
 
 </td>
 </tr>
@@ -127,14 +127,26 @@ Every attack in the lab follows this chain. BLEED visualizes each step, captures
 
 **Property Intelligence** — Every chain, gadget, source, and evidence record for a specific polluted property.
 
-![Properties](docs/screenshots/properties.jpg)
+![Properties](docs/screenshots/properties.png)
 
 </td>
 <td width="50%">
 
 **Showcase Mode** — Auto-playing 8-slide demo at `/showcase`. Full keyboard navigation, pause/play, progress dots.
 
-![Showcase](docs/screenshots/showcase.jpg)
+![Showcase](docs/screenshots/showcase.png)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Source Library** — 20 pollution sources with CVE references, code snippets, severity ratings, and affected versions.
+
+![Sources](docs/screenshots/sources.png)
+
+</td>
+<td width="50%">
 
 </td>
 </tr>

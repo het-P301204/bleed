@@ -1,5 +1,7 @@
 import express, { type Request, type Response, type NextFunction } from 'express'
 import cors from 'cors'
+import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
 import { errorHandler } from './middleware/error.js'
 import { rejectPathTraversal, rejectOversizedBody, rejectInvalidLabTarget } from './middleware/validate.js'
 import sourcesRouter from './routes/sources.js'
@@ -25,10 +27,20 @@ function requireToken(req: Request, res: Response, next: NextFunction): void {
   next()
 }
 
+const apiLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 120,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests — slow down' },
+})
+
 export function createApp() {
   const app = express()
 
+  app.use(helmet())
   app.use(cors({ origin: ALLOWED_ORIGINS }))
+  app.use(apiLimiter)
   app.use(rejectOversizedBody)
   app.use(express.json({ limit: '1mb' }))
   app.use(rejectPathTraversal)

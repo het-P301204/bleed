@@ -4,7 +4,8 @@ import { getAllGadgets, getGadgetById, findGadgetsForProperty, findGadgetsForLib
 const router = Router()
 
 router.get('/', (req, res) => {
-  const { property, library } = req.query as Record<string, string>
+  const property = typeof req.query['property'] === 'string' ? req.query['property'] : undefined
+  const library = typeof req.query['library'] === 'string' ? req.query['library'] : undefined
   if (property) return void res.json(findGadgetsForProperty(property))
   if (library) return void res.json(findGadgetsForLibrary(library))
   res.json(getAllGadgets())

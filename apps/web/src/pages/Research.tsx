@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Search } from 'lucide-react'
 import type { ResearchReference } from '@bleed/shared'
+import { api } from '../api/client'
 
 const FALLBACK_REFS: ResearchReference[] = [
   {
@@ -187,9 +188,8 @@ export default function Research() {
   const [query, setQuery] = useState('')
 
   useEffect(() => {
-    fetch('http://localhost:4001/api/research')
-      .then(r => r.json())
-      .then((data: ResearchReference[]) => {
+    api.get<ResearchReference[]>('/research')
+      .then((data) => {
         if (Array.isArray(data) && data.length > 0) setRefs(data)
       })
       .catch(() => { /* use fallback */ })
