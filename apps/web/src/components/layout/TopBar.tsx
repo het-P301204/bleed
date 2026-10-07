@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Menu, Search, RefreshCw, ChevronRight, Zap } from 'lucide-react'
+import { Menu, Search, RefreshCw, Zap } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAppStore } from '../../store/app'
 import NotificationBell from '../common/NotificationBell'
@@ -35,7 +35,7 @@ function relativeTime(ts: number | null) {
   return `${Math.floor(diff / 3600)}h ago`
 }
 
-function DemoPill() {
+function ModePill() {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const { mode, setMode, addToast } = useAppStore()
@@ -49,16 +49,20 @@ function DemoPill() {
     return () => document.removeEventListener('mousedown', handle)
   }, [])
 
-  if (mode !== 'DEMO') return null
+  const isDemo = mode === 'DEMO'
 
   return (
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(o => !o)}
-        className="flex items-center gap-1.5 text-xs font-mono text-marigold border border-marigold/40 bg-marigold/8 hover:bg-marigold/15 px-2.5 py-1 rounded transition-colors"
+        className={`flex items-center gap-1.5 text-xs font-mono px-2.5 py-1 rounded border transition-colors ${
+          isDemo
+            ? 'text-marigold border-marigold/40 bg-marigold/8 hover:bg-marigold/15'
+            : 'text-sage border-sage/40 bg-sage/8 hover:bg-sage/15'
+        }`}
       >
         <Zap size={10} />
-        DEMO DATA
+        {isDemo ? 'DEMO DATA' : 'LIVE LAB'}
       </button>
 
       <AnimatePresence>
@@ -70,27 +74,55 @@ function DemoPill() {
             transition={{ duration: 0.15 }}
             className="absolute right-0 top-full mt-2 w-72 bg-graphite border border-border rounded-lg shadow-2xl z-50 p-4"
           >
-            <div className="text-xs font-mono text-marigold uppercase tracking-widest mb-1">Demo Environment</div>
-            <div className="text-sm text-ivory/70 mb-1">Synthetic research dataset</div>
-            <div className="text-xs text-ivory/40 mb-4">No external systems are being analyzed. All data is controlled lab output.</div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => { setOpen(false); nav('/dashboard') }}
-                className="flex-1 text-xs font-semibold bg-coral text-graphite px-3 py-2 rounded-sm hover:bg-coral/90 transition-colors"
-              >
-                Explore Demo
-              </button>
-              <button
-                onClick={() => {
-                  setMode('LIVE')
-                  setOpen(false)
-                  addToast({ type: 'info', title: 'Switched to Live Lab mode', description: 'Connect Docker lab to use real scenarios' })
-                }}
-                className="flex-1 text-xs font-semibold border border-border text-ivory/60 px-3 py-2 rounded-sm hover:border-ivory/30 hover:text-ivory transition-colors"
-              >
-                Launch Local Lab
-              </button>
-            </div>
+            {isDemo ? (
+              <>
+                <div className="text-xs font-mono text-marigold uppercase tracking-widest mb-1">Demo Environment</div>
+                <div className="text-sm text-ivory/70 mb-1">Synthetic research dataset</div>
+                <div className="text-xs text-ivory/40 mb-4">No external systems are being analyzed. All data is controlled lab output.</div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => { setOpen(false); nav('/dashboard') }}
+                    className="flex-1 text-xs font-semibold bg-coral text-graphite px-3 py-2 rounded-sm hover:bg-coral/90 transition-colors"
+                  >
+                    Explore Demo
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMode('LIVE')
+                      setOpen(false)
+                      addToast({ type: 'info', title: 'Switched to Live Lab mode', description: 'Connect Docker lab to use real scenarios' })
+                    }}
+                    className="flex-1 text-xs font-semibold border border-border text-ivory/60 px-3 py-2 rounded-sm hover:border-ivory/30 hover:text-ivory transition-colors"
+                  >
+                    Launch Local Lab
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="text-xs font-mono text-sage uppercase tracking-widest mb-1">Live Lab Mode</div>
+                <div className="text-sm text-ivory/70 mb-1">Connected to Docker lab fixtures</div>
+                <div className="text-xs text-ivory/40 mb-4">Scenarios run against real vulnerable/hardened containers. All impacts are synthetic.</div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      setMode('DEMO')
+                      setOpen(false)
+                      addToast({ type: 'success', title: 'Switched to Demo mode', description: 'Using synthetic research dataset' })
+                    }}
+                    className="flex-1 text-xs font-semibold bg-marigold/80 text-graphite px-3 py-2 rounded-sm hover:bg-marigold transition-colors"
+                  >
+                    Switch to Demo
+                  </button>
+                  <button
+                    onClick={() => { setOpen(false); nav('/lab') }}
+                    className="flex-1 text-xs font-semibold border border-sage/40 text-sage px-3 py-2 rounded-sm hover:border-sage hover:bg-sage/10 transition-colors"
+                  >
+                    Open Lab
+                  </button>
+                </div>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -165,7 +197,7 @@ export default function TopBar({ onMenuClick, onSearchClick }: TopBarProps) {
 
       {/* Right controls */}
       <div className="flex items-center gap-2">
-        <DemoPill />
+        <ModePill />
         <RefreshButton />
         <NotificationBell />
         <button
