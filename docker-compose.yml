@@ -3,7 +3,7 @@ name: bleed
 networks:
   bleed-net:
     driver: bridge
-    internal: false  # allows npm install during build; runtime traffic stays within bleed-net
+    internal: true  # no outbound internet from containers at runtime; npm install runs in Dockerfile RUN
 
 services:
   api:

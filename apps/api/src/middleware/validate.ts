@@ -12,7 +12,8 @@ export function rejectOversizedBody(req: Request, res: Response, next: NextFunct
 }
 
 export function rejectPathTraversal(req: Request, res: Response, next: NextFunction): void {
-  const raw = req.path + JSON.stringify(req.params)
+  // Check path, params, query string, and parsed body (body is parsed before this middleware runs)
+  const raw = req.path + JSON.stringify(req.params) + JSON.stringify(req.query) + JSON.stringify(req.body ?? {})
   if (raw.includes('..') || raw.toLowerCase().includes('%2e%2e')) {
     res.status(400).json({ error: 'Path traversal attempt detected' })
     return

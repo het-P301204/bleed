@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { type Request, type Response, type NextFunction } from 'express'
 import cors from 'cors'
 import { errorHandler } from './middleware/error.js'
 import { rejectPathTraversal, rejectOversizedBody, rejectInvalidLabTarget } from './middleware/validate.js'
@@ -12,7 +12,18 @@ import metricsRouter from './routes/metrics.js'
 import dependenciesRouter from './routes/dependencies.js'
 import researchRouter from './routes/research.js'
 
-const ALLOWED_ORIGINS = ['http://localhost:4000', 'http://localhost:5173']
+const ALLOWED_ORIGINS = (process.env['CORS_ORIGINS'] ?? 'http://localhost:4000,http://localhost:5173').split(',')
+const API_TOKEN = process.env['BLEED_API_TOKEN']
+
+function requireToken(req: Request, res: Response, next: NextFunction): void {
+  if (!API_TOKEN) { next(); return } // dev mode: no token required when env var is absent
+  const auth = req.headers['authorization']
+  if (auth !== `Bearer ${API_TOKEN}`) {
+    res.status(401).json({ error: 'Unauthorized' })
+    return
+  }
+  next()
+}
 
 export function createApp() {
   const app = express()
@@ -26,6 +37,7 @@ export function createApp() {
     res.json({ status: 'ok', uptime: process.uptime() })
   })
 
+  app.use('/api', requireToken)
   app.use('/api/sources', sourcesRouter)
   app.use('/api/gadgets', gadgetsRouter)
   app.use('/api/chains', chainsRouter)

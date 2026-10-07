@@ -95,7 +95,16 @@ function buildMockRun(scenario: Scenario, mode: 'vulnerable' | 'hardened', start
   })
 }
 
-export async function runScenario(scenario: Scenario, mode: 'vulnerable' | 'hardened' = 'vulnerable'): Promise<ResearchRun> {
+// Serialize all runs so prototype capture/restore never overlaps across requests
+let _runQueue: Promise<void> = Promise.resolve()
+
+export function runScenario(scenario: Scenario, mode: 'vulnerable' | 'hardened' = 'vulnerable'): Promise<ResearchRun> {
+  return new Promise<ResearchRun>((resolve, reject) => {
+    _runQueue = _runQueue.then(() => _runScenarioInternal(scenario, mode).then(resolve, reject))
+  })
+}
+
+async function _runScenarioInternal(scenario: Scenario, mode: 'vulnerable' | 'hardened'): Promise<ResearchRun> {
   const startTime = Date.now()
   const appUrl = mode === 'hardened' ? HARDENED_APP_URL : VULNERABLE_APP_URL
   const payload = buildPayload(scenario)

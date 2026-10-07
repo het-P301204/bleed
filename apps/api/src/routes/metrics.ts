@@ -10,6 +10,7 @@ router.get('/', (_req, res) => {
   const runs = getAllRuns()
   const gadgets = getAllGadgets()
 
+  const lastRunAt = getLastRunAt()
   const metrics: BleedMetrics = {
     sources: SOURCES.length,
     gadgets: gadgets.length,
@@ -17,7 +18,7 @@ router.get('/', (_req, res) => {
     reproducedChains: runs.filter(r => r.result === 'REPRODUCED').length,
     hardenedBlocked: runs.filter(r => r.result === 'BLOCKED').length,
     totalRuns: getRunCount(),
-    lastRunAt: getLastRunAt(),
+    ...(lastRunAt !== undefined && { lastRunAt }),
   }
 
   res.json(metrics)
